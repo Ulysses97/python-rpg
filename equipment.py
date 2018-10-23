@@ -6,8 +6,8 @@ class Equipment :
     self.name = name
 
     self.stats = {
-      'health' : health,
-      'mana' : mana,
+      'maxHealth' : health,
+      'maxMana' : mana,
       'healthReg' : healthReg,
       'manaReg' : manaReg,
       'strength' : strength,
@@ -17,3 +17,10 @@ class Equipment :
       'armor' : armor,
       'magicResist' : magicResist 
     }
+
+  def equip(self, player) :
+    # Las estadísticas del item se suman a las del Jugador.
+    for p_key, p_value in player.currentStats.items() :
+      for key, value in self.stats.items() :
+        if key == p_key and value != 0 :
+          player.currentStats[key] = p_value + value

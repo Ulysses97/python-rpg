@@ -6,28 +6,32 @@ class Player :
     self.lvl = 1
 
     # Base Stats
-    self.baseHealth = baseHealth
-    self.baseMana = baseMana
-    self.baseStrength = baseStrength
-    self.baseIntelligence = baseIntelligence
-    self.baseDextery = baseDextery
-    self.baseLuck = baseLuck
+    self.baseStats = {
+      'health' : baseHealth,
+      'mana' : baseMana,
+      'strength' : baseStrength,
+      'intelligence' : baseIntelligence,
+      'dextery' : baseDextery,
+      'luck' : baseLuck
+    }
 
     # Current Stats
-    self.maxHealth = baseHealth
-    self.health = baseHealth
-    self.maxMana = baseMana
-    self.mana = baseMana
-    self.strength = baseStrength
-    self.intelligence = baseIntelligence
-    self.dextery = baseDextery
-    self.luck = baseLuck 
+    self.currentStats = {
+      'maxHealth' : baseHealth,
+      'health' : baseHealth,
+      'maxMana' : baseMana,
+      'mana' : baseMana,
+      'strength' : baseStrength,
+      'intelligence' : baseIntelligence,
+      'dextery' : baseDextery,
+      'luck' : baseLuck,
 
-    self.healthReg = 0
-    self.manaReg = 0
+      'healthReg' : 0,
+      'manaReg' : 0,
 
-    self.armor = 0
-    self.magicResist = 0
+      'armor' : 0,
+      'magicResist' : 0,
+    }
 
     # Equipment
     self.equipment = [
@@ -48,3 +52,8 @@ class Player :
       'maxSlots' : 10,
       'availableSlots' : 10
     }
+
+  def equipItemFromInventory(self, item) :
+    item.equip(self) # Las estadísticas del item se suman a las del Jugador.
+    self.inventory['inventory'].remove(item) # El item es removido del inventario.
+    self.inventory['availableSlots'] += item.size # Se libera espacio en el inventario.
