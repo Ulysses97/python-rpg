@@ -100,19 +100,68 @@ class Player :
     if self.equipment[item.type] != None : # Existe un item ya equipado.
       if self.inventory['availableSlots'] + item.size < self.equipment[item.type].size :
         # El item equipado no cabe en el inventario, de proceder este se perderá.
-        choice = str(input('El item equipado actualmente no cabe en el inventario, de proceder este se perderá. Continuar? (y/n) : ')).lower()
+        choice = str(input('El item equipado actualmente no cabe en el inventario, de proceder este se perderá. ¿Continuar? (y/n) : ')).lower()
         while choice not in ['y','n'] :
           choice = str(input('Ingresa una opción válida (y/n) : ')).lower()
 
         if choice == 'n' :
           return
       else :
-        unequippedItem = self.equipment[item.type].unequip(self) # El item es desequipado y guardado en una copia.
+        unequippedItem = self.equipment[item.type].unequip(self) # El item es desequipado y guardado en el inventario.
         self.appendItem(unequippedItem)
 
     item.equip(self)
     self.removeItem(item)
-    self.calcStats() # Las estadísticas del item se suman a las del Jugador.
+    self.calcStats()
+
+  def equipFromGround(self, item) :
+    if self.equipment[item.type] != None : # Existe un item ya equipado.
+      if self.equipment[item.type].size > self.inventory['availableSlots'] :
+        # El item equipado no cabe en el inventario, de proceder este se perderá.
+        choice = str(input('El item equipado actualmente no cabe en el inventario, de proceder este se perderá. ¿Continuar? (y/n) : ')).lower()
+        while choice not in ['y','n'] :
+          choice = str(input('Ingresa una opción válida (y/n) : ')).lower()
+
+        if choice == 'n' :
+          return
+      else :
+        unequippedItem = self.equipment[item.type].unequip(self) # El item es desequipado y guardado en el inventario.
+        self.appendItem(unequippedItem)
+    item.equip(self)
+    self.calcStats()
+
+  def unequipItem(self, item) :
+    if self.inventory['availableSlots'] < item.size :
+      # El item que se desea desequipar no cabe en el inventario.
+      choice = str(input('El item equipado actualmente no cabe en el inventario, de proceder este se perderá. ¿Continuar? (y/n) : ')).lower()
+      while choice not in ['y','n'] :
+        choice = str(input('Ingresa una opción válida (y/n) : ')).lower()
+
+      if choice == 'n' :
+        return
+      else :
+        item.unequip(self)
+    else :
+      self.appendItem(item)
+      item.unequip(self)
+    self.calcStats()
+
+  def pickItem(self, item) :
+    if item.size <= self.inventory['availableSlots'] :
+      self.appendItem(item)
+      print(item.name + " recogido.")
+    else :
+      print("No tienes espacio suficiente para llevar este objeto.")
+
+  def dropItem(self, item) :
+    choice = str(input("Si sueltas un objeto, este se perderá. ¿Estás seguro? (y/n) : ")).lower()
+    while choice not in ['y','n'] :
+      choice = str(input("Ingresa una opción válida (y/n) : ")).lower()
+
+    if choice == 'n' :
+      return
+    else :
+      self.removeItem(item)
 
 ################################ testing
 # jugador = Player(1,1,1,1,1,1)
@@ -132,6 +181,8 @@ class Player :
 # jugador.inventory['inventory'].append(botas)
 # jugador.inventory['availableSlots'] -= botas.size
 
-# jugador.equipItemFromInventory(jugador.inventory['inventory'][0])
+# casco3 = equipment.Equipment('head',5,'casco3',1,1,1,1,1,1,1,1,1,1)
 
-# print(jugador.currentStats)
+# jugador.equipFromGround(casco3)
+
+# print(jugador.inventory['inventory'])
