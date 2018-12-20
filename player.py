@@ -1,8 +1,4 @@
 import collections
-####################### Testing
-import importlib
-equipment = importlib.import_module("equipment")
-##########################
 
 class Player :
   def __init__(self, baseHealth, baseMana, baseStrength, baseIntelligence, baseDextery, baseLuck) :
@@ -162,27 +158,3 @@ class Player :
       return
     else :
       self.removeItem(item)
-
-################################ testing
-# jugador = Player(1,1,1,1,1,1)
-# casco = equipment.Equipment('head',8,'casco',1,1,1,1,1,1,1,1,1,1)
-# jugador.inventory['inventory'].append(casco)
-# jugador.inventory['availableSlots'] -= casco.size
-
-# jugador.equipItemFromInventory(jugador.inventory['inventory'][0])
-
-# casco2 = equipment.Equipment('head',5,'casco2',1,1,1,1,1,1,1,1,1,1)
-
-# jugador.inventory['inventory'].append(casco2)
-# jugador.inventory['availableSlots'] -= casco2.size
-
-# botas = equipment.Equipment('legs',5,'botas',1,1,1,1,1,1,1,1,1,1)
-
-# jugador.inventory['inventory'].append(botas)
-# jugador.inventory['availableSlots'] -= botas.size
-
-# casco3 = equipment.Equipment('head',5,'casco3',1,1,1,1,1,1,1,1,1,1)
-
-# jugador.equipFromGround(casco3)
-
-# print(jugador.inventory['inventory'])
